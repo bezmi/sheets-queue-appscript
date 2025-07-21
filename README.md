@@ -11,26 +11,29 @@ Everything starts from the main login page.
 3.  In the **Admin Password** box, enter the pre-shared password for the system.
 4.  Click **"Create / Join Session"**.
 
-You will be automatically redirected to the admin page for your session. **You should bookmark this new page!** Your browser's URL now contains your unique, secret admin key.
+You will be automatically redirected to the admin page for your session.
 
-### 2. The Admin Page vs. The Read-Only Page
-
+### 2. The admin vs read-only session page
+1. `https://<your-username>.github.io/<your-repo-name>?session=the-session-name&key=a-secret-key`
+2. `https://<your-username>.github.io/<your-repo-name>?session=the-session-name`
 There are two ways to view a session queue, and it all depends on the URL:
+
 
 | Feature                  | Your Admin Page (`...&key=...`)                                                                    | Read-Only Page (no key)                                   |
 | ------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| **Who Sees It**          | **You, the tutor.** Your URL has a secret `&key=...` at the end. Keep this page to yourself.          | Students, or a projector screen. The URL has no key.      |
+| **Who Sees It**          | **You, anyone with the admin password.** Your URL has a secret `&key=...` at the end. Keep this page to yourself.          | Students, or a projector screen. The URL has no key.      |
 | **Controls**             | You can see and use the configuration panel ("Max Concurrent", "Warning Time") and action buttons ("Start", "Delete"). | No configuration or action buttons are visible.         |
 | **Purpose**              | Actively manage the queue.                                                                         | Passively view the queue's status.                        |
 
-### 3. Getting Students into the Queue
+> **Note:** You can find the URL for the read-only session in the "admin settings" section. You should only ever show the read-only page on the projector.
 
-On your admin page, you will see a blue box with a link. This is the **Join Link**.
+### 3. Getting students to join the queue
 
-*   **Share this link with your students.** Post it in your chat, on the board, or in your learning management system.
-*   When students visit this link, they will see a simple form where they can enter their name to be added to the bottom of the queue.
+On your admin page, you will see a blue box with a link and QR code. This is the **Join Link**.
 
-### 4. Configuring Your Session
+*   When students visit this link or scan the QR code, they will see a simple form where they can enter their name to be added to the bottom of the queue.
+
+### 4. Configuring the session
 
 On the admin page, you have two settings:
 
@@ -38,7 +41,7 @@ On the admin page, you have two settings:
     > **Note:** This value should typically be set to the **number of tutors available** in the session. If you have two tutors, set it to `2`.
 *   **Active Time Warning (mins):** This sets a timer. If a student's "active" time goes beyond this limit, their row will be highlighted in **red** as a visual reminder to wrap up.
 
-### 5. Managing Students in the Queue
+### 5. Managing the queue
 
 Each student in the list has a timer and, for you, action buttons.
 
@@ -54,13 +57,11 @@ Each student in the list has a timer and, for you, action buttons.
     *   When you are finished helping a student, click this button.
     *   The student will be instantly removed from the list, and the next person in the queue will move up.
 
-### 6. What If I Accidentally Close My Admin Tab?
-
-No problem! You can always get back control of your session.
+### 6. If you accidentally close the admin tab
 
 1.  Go back to the main login page (`index.html`).
 2.  Enter the **exact same Session Name** you used before.
 3.  Enter the admin password.
 4.  Click **"Create / Join Session"**.
 
-The system will recognize the existing session and generate a **new, secure admin key** for you, redirecting you to the admin page. The old admin link you bookmarked will no longer work.
+The system will should the existing session and generate a new key, redirecting you to the admin page. The old admin link you bookmarked will no longer work.

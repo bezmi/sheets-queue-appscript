@@ -18,6 +18,7 @@
         #admin-info { padding: 1.5rem; border: 2px dashed #007bff; background-color: #e7f1ff; display: flex; flex-direction: column; align-items: center; gap: 1rem; border-radius: 8px; }
         #qrcode { padding: 5px; background: white; border-radius: 4px; }
         #join-link-text { word-break: break-all; font-weight: 500; font-family: monospace; font-size: 0.9rem; text-align: center; }
+        #session-link-text { word-break: break-all; font-weight: 500; font-family: monospace; font-size: 0.9rem; text-align: center; }
         #queue-list { list-style-type: none; padding-left: 0; }
         #queue-list li { display: grid; grid-template-columns: 25px 1fr 120px 150px; align-items: center; gap: 15px; background-color: #fff; border: 1px solid #dee2e6; border-radius: 6px; padding: 0.8rem 1rem; margin-bottom: 0.8rem; transition: all 0.3s ease; }
         
@@ -62,6 +63,7 @@
                     <label for="warning-time">Active Time Warning (mins)</label>
                     <input type="number" id="warning-time" value="5" min="1">
                 </div>
+                <a id="session-link-text" href="#" target="_blank"></a>
             </div>
         </details>
         <div id="admin-info" hidden>
@@ -257,6 +259,11 @@
             joinUrl.searchParams.delete('key');
             joinLinkTextEl.href = joinUrl.href;
             joinLinkTextEl.textContent = joinUrl.href;
+            const sessionLinkTextEl = document.getElementById('session-link-text');
+            const sessionUrl = new URL(window.location.href);
+            sessionUrl.searchParams.delete('key');
+            sessionLinkTextEl.href = sessionUrl.href;
+            sessionLinkTextEl.textContent = sessionUrl.href;
             adminInfoEl.hidden = false;
             new QRCode(qrcodeEl, { text: joinUrl.href, width: 128, height: 128, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
 
