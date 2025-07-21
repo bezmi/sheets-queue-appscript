@@ -50,6 +50,7 @@ This part sets up the user-facing HTML files.
 
 1.  **Create a GitHub Repository:**
     *   Create a new, public repository on GitHub for this project (e.g., `queue-system`).
+    > **NOTE: the name you select here will form part of the URL**
 
 2.  **Add Project Files:**
     *   Upload the three HTML files from this project to your new repository:
@@ -70,10 +71,13 @@ This part sets up the user-facing HTML files.
     *   Open `index.html`, `session.html`, and `join.html` for editing.
     *   In **each of the three files**, find the line:
         ```javascript
-        const webAppUrl = 'PASTE_YOUR_WEB_APP_URL_HERE';
+        const webAppUrl = '__WEB_APP_URL_PLACEHOLDER__';
         ```
-    *   Replace `PASTE_YOUR_WEB_APP_URL_HERE` with the Web app URL from Part 1, Step 7.
+    *   Replace `__WEB_APP_URL_PLACEHOLDER__` with the Web app URL from Part 1, Step 7.
     *   Commit and push these changes to your GitHub repository.
+
+    > Once copied into the directory for the pages repo,
+    you can run `sed -i 's|__WEB_APP_URL_PLACEHOLDER__|https://the.web.app.url|g' *.html` to do this for all html files.
 
 5.  **Enable GitHub Pages:**
     *   In your GitHub repository, go to **Settings > Pages**.

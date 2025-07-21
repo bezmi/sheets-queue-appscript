@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queue System - Admin Login</title>
+    <title>Live Queue System - Login</title>
     <style>
-        body { display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
         .login-container { background: #fff; padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h1 { text-align: center; color: #343a40; margin-top: 0; }
+        h1 { text-align: center; color: #333; margin-top: 0; }
         .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #495057; }
-        input { width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 0.75rem; font-size: 1rem; color: #fff; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
-        button:hover { background-color: #0056b3; }
-        button:disabled { background-color: #6c757d; cursor: not-allowed; }
-        #status-message { margin-top: 1rem; padding: 1rem; border-radius: 5px; text-align: center; display: none; }
-        .error { background-color: #f8d7da; color: #721c24; }
+        label { display: block; margin-bottom: 0.5rem; color: #555; font-weight: 500; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
+        button:disabled { background-color: #6c757d; }
+        #error-message { margin-top: 1rem; color: #dc3545; text-align: center; min-height: 1.2em; }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h1>Admin Portal</h1>
+        <h1>Queue System Login</h1>
         <form id="login-form">
             <div class="form-group">
                 <label for="session-name">Session Name</label>
@@ -33,39 +31,36 @@
             <input type="hidden" name="action" value="create_session">
             <button type="submit" id="submit-button">Create / Join Session</button>
         </form>
-        <div id="status-message"></div>
+        <p id="error-message"></p>
     </div>
 
     <script>
-        const webAppUrl = 'PASTE_YOUR_WEB_APP_URL_HERE';
-        const loginForm = document.getElementById('login-form');
-        const submitButton = document.getElementById('submit-button');
-        const statusMessageEl = document.getElementById('status-message');
+        const webAppUrl = '__WEB_APP_URL_PLACEHOLDER__'; // This will be replaced by the build process
 
-        loginForm.addEventListener('submit', async (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const form = e.target;
+            const submitButton = document.getElementById('submit-button');
+            const errorMessageEl = document.getElementById('error-message');
+            
             submitButton.disabled = true;
             submitButton.textContent = 'Verifying...';
-            statusMessageEl.style.display = 'none';
-
-            const formData = new FormData(loginForm);
-            const sessionName = formData.get('session');
+            errorMessageEl.textContent = '';
 
             try {
+                const formData = new FormData(form);
                 const response = await fetch(webAppUrl, { method: 'POST', body: formData });
                 const data = await response.json();
 
-                if (data.result === 'success' && data.newKey) {
+                if (data.result === 'success' && data.key) {
+                    const sessionName = formData.get('session');
                     // Redirect to the session page with the new key
-                    const sessionUrl = `session.html?session=${encodeURIComponent(sessionName)}&key=${data.newKey}`;
-                    window.location.href = sessionUrl;
+                    window.location.href = `session.html?session=${encodeURIComponent(sessionName)}&key=${data.key}`;
                 } else {
                     throw new Error(data.message || 'An unknown error occurred.');
                 }
             } catch (error) {
-                statusMessageEl.textContent = `Error: ${error.message}`;
-                statusMessageEl.className = 'error';
-                statusMessageEl.style.display = 'block';
+                errorMessageEl.textContent = error.message;
                 submitButton.disabled = false;
                 submitButton.textContent = 'Create / Join Session';
             }

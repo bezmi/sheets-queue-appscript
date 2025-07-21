@@ -1,13 +1,13 @@
-# Tutor's Guide to the Live Queue System
+# Queue system guide
 
-Welcome! This guide explains how to use the live queue system to manage your busy tutorial sessions effectively.
+This guide explains how to use the live queue system to manage busy tutorial sessions.
 
 ### 1. How to Start a New Session
 
 Everything starts from the main login page.
 
-1.  Navigate to the system's main URL (e.g., `https://your-university.github.io/queue-system/`).
-2.  In the **Session Name** box, enter a unique name for your session (e.g., `cs101-wednesday-lab`).
+1.  Navigate to the system's main URL (e.g., `https://<your-username>.github.io/<your-repo-name>/`).
+2.  In the **Session Name** box, enter a unique name for your session (e.g., `test-session-1`).
 3.  In the **Admin Password** box, enter the pre-shared password for the system.
 4.  Click **"Create / Join Session"**.
 
