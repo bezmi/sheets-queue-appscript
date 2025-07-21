@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Queue</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 2rem auto; padding: 0 1rem; background-color: #f8f9fa; }
+        h1, h2 { color: #343a40; }
+        form { display: flex; flex-direction: column; gap: 1rem; background-color: #fff; padding: 1.5rem; border: 1px solid #dee2e6; border-radius: 5px; }
+        input[type="text"] { padding: 0.75rem; font-size: 1rem; border: 1px solid #ced4da; border-radius: 4px; }
+        button { padding: 0.75rem; font-size: 1rem; color: #fff; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer; }
+        button:disabled { background-color: #6c757d; }
+        #status-message { margin-top: 1rem; padding: 1rem; border-radius: 5px; text-align: center; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <h1>Join the Queue</h1>
+    <h2 id="session-name">Loading...</h2>
+
+    <form id="join-form">
+        <label for="name-input">Enter Your Name:</label>
+        <input type="text" id="name-input" name="name" required>
+        <input type="hidden" name="action" value="add">
+        <button type="submit" id="submit-button">Add to Queue</button>
+    </form>
+    <div id="status-message"></div>
+
+    <script>
+        const webAppUrl = 'PASTE_YOUR_WEB_APP_URL_HERE';
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionName = urlParams.get('session');
+
+        if (!sessionName) {
+            document.body.innerHTML = '<h1>Error: No session specified. Please use a link provided by your tutor.</h1>';
+        } else {
+            document.getElementById('session-name').textContent = `Session: ${sessionName}`;
+        }
+
+        document.getElementById('join-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = document.getElementById('submit-button');
+            const statusMessageEl = document.getElementById('status-message');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Adding...';
+
+            const formData = new FormData(e.target);
+            formData.append('session', sessionName);
+            
+            try {
+                const response = await fetch(webAppUrl, { method: 'POST', body: formData });
+                const data = await response.json();
+                if (data.result === 'success') {
+                    statusMessageEl.textContent = 'Success! You have been added to the queue.';
+                    statusMessageEl.className = 'success';
+                    document.getElementById('name-input').value = '';
+                } else {
+                    // This will now correctly show the "Session not found" error
+                    statusMessageEl.textContent = `Error: ${data.message}`;
+                    statusMessageEl.className = 'error';
+                }
+            } catch (error) {
+                statusMessageEl.textContent = `Network Error: ${error}`;
+                statusMessageEl.className = 'error';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Add to Queue';
+            }
+        });
+    </script>
+</body>
+</html>
