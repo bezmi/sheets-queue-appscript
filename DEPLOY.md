@@ -2,6 +2,13 @@
 
 This document provides a step-by-step guide for system administrators to deploy the Live Queue System using Google Sheets and GitHub Pages.
 
+### Depoly locally (testing/development only)
+For quick iteration during testing only, you can deploy the frontend locally instead of via GitHub pages
+
+1. Follow the google sheet and apps script setup step below.
+2. once you have the web app url, simply call `./deploy-test.sh <your web app url>`.
+3. you should be able to access the app via the link printed by the deploy script
+
 ### Part 1: Google Sheet & Apps Script Setup
 
 This part creates the backend "database" and API for the application.
